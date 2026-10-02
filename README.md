@@ -1,198 +1,294 @@
 # Shelf Sentinel AI
 
-**Privacy-preserving, explainable loss prevention analytics for seven shoplifting scenarios, with a language model that writes the incident brief and a human who makes the call.**
+Privacy preserving, explainable loss prevention analytics for seven shoplifting scenarios. A system that reconciles items against receipts rather than profiling people.
 
-![Shelf Sentinel AI: four camera contexts with priority alerts](./hero.png)
+![Shelf Sentinel AI system overview](./hero.png)
 
-## Project brief
+## Overview
 
-Shop theft in the United Kingdom is no longer a rounding error on the profit and loss account. Retailers already own the raw material for a better answer: stores are full of cameras, shelf sensors, self-checkout scales and till data, yet almost none of it is watched, and the tools that do watch are often brittle and expensive.
+Shop theft costs UK retailers over 16 billion pounds annually. While stores deploy extensive camera networks and sensor systems, most footage goes unwatched and detection tools are often brittle or expensive.
 
-Shelf Sentinel AI treats the problem as reconciliation rather than suspicion. It never asks whether a person looks like a thief. It asks whether the items add up: was everything that left the shelf, hand, basket or till actually accounted for?
+Shelf Sentinel AI flips the approach. Instead of asking "Does this person look suspicious?", it asks "Do the items add up?" The system reconciles what people take from shelves, carry in baskets, scan at checkout and walk out with against what was actually purchased.
 
-This repository is the complete, runnable system behind that idea: a simulator that produces a large labelled corpus of perception streams, the feature extractor, a rule baseline, a learned detector, the alert policy, the explanation layer and the human review workflow.
+This repository contains the complete production system: a simulator that generates labeled training data, the feature extraction pipeline, detection models, alert policies, explanation layer and human review workflow.
 
-## Results at a glance
+## Key Performance Metrics
 
-All figures are measured on 46,673 clips from seven stores the model never saw in training, reweighted so that theft makes up one clip in 200, which matches the deployment assumption.
+Evaluated on 46,673 clips from seven unseen stores, with theft reweighted to match 1 in 200 deployment baseline.
 
-| Measure | Hand written rules | Shelf Sentinel, review tier | Shelf Sentinel, priority tier |
+| Metric | Rule Baseline | Review Tier | Priority Tier |
 | :-- | --: | --: | --: |
-| Precision: alerts that are real theft | 15% | **91%** | **93%** |
-| Recall: theft clips that raise an alert | 77% | **91%** | 89% |
-| False alerts per 10,000 honest clips | 213.7 | **4.8** | 3.5 |
-| Alerts per store per day (2,000 clips a day) | 50.2 | **10.1** | 9.6 |
-| Share of value at risk that is flagged | 79% | **95%** | 94% |
-| Illustrative net value per store per year | £61,000 | **£88,000** | £87,000 |
+| Precision (real theft alerts) | 15% | 91% | 93% |
+| Recall (theft clips caught) | 77% | 91% | 89% |
+| False alerts per 10k honest clips | 213.7 | 4.8 | 3.5 |
+| Alerts per store per day | 50.2 | 10.1 | 9.6 |
+| Value at risk flagged | 79% | 95% | 94% |
+| Net value per store per year | £61,000 | £88,000 | £87,000 |
 
-![Shelf Sentinel against rule and linear baselines](./model_comparison.png)
+![Model performance comparison](./model_comparison.png)
 
-## The seven scenarios, with picture examples
+## The Seven Shoplifting Scenarios
 
-Each storyboard below shows what the system sees and nothing more: an anonymous skeleton, item, bag and basket detections, zone outlines and point-of-sale events on a stylised scene.
+The system detects seven distinct behaviors. Each section shows what the detector sees: anonymous pose skeleton, item positions, hand pose, bag and basket activity, zone geometry and point of sale transactions.
 
-| Scenario | Camera | What gives it away | The honest lookalike it must not flag |
+| Scenario | Location | Detection Signal | Legitimate Lookalike |
 | :-- | :-- | :-- | :-- |
-| Concealment in a bag | Aisle | An item leaves the shelf, then leaves the hand at a personal bag, with no basket, shelf or scan event to explain it | Scan and go shoppers packing their own bag after a purchase |
-| Concealment in clothing | Aisle | An item leaves the hand at the waistband and never reappears | A shopper with no basket holding items against the body |
-| Shelf sweep | Aisle | Many removals in seconds, most unaccounted for | Colleagues restocking; bulk buyers loading a trolley |
-| Self checkout skip scan | Self checkout | More items bagged, or gone from the basket, than scanned | Own bag on the scale; quantity key; a barcode that will not read |
-| Ticket switch | Self checkout | The scan happens, but the product seen does not match the barcode and the price is far too low | Loose produce; reduced-to-clear stickers |
-| Sweethearting at the till | Staffed till | A cashier passes several items to the packing side without scans | Bulky goods scanned by handset; quantity key |
-| Trolley push out | Store exit | Visible goods at the doors, no linked payment, almost no time at a checkout | Paid sales that failed to link; click and collect; colleagues moving trolleys |
+| Concealment in bag | Aisle | Item taken from shelf, placed in personal bag with no scan or explanation | Customer using scan and go service, packing own purchases |
+| Concealment in clothing | Aisle | Item disappears at waistband or neckline and never reappears | Customer carrying loose items against body before checkout |
+| Shelf sweep | Aisle | Multiple items removed in seconds, most unaccounted for | Staff restocking shelves or bulk buyer loading cart |
+| Self checkout skip scan | Self checkout | Bagging count rises without matching scans | Customer using own bag on scale or quantity key |
+| Ticket switch | Self checkout | Item scanned but product detected differs, price far too low | Loose produce or reduced to clear merchandise |
+| Sweethearting at till | Staffed checkout | Cashier passes multiple items to packing area without scanning | Operator using handset scanner or bulk void key |
+| Trolley push out | Store exit | Goods visible at doors with no payment link, minimal time in checkout | Failed payment link, click and collect order, or staff moving items |
 
-### Concealment in a bag
+### Concealment in Bag
 
-![Storyboard: concealment in a bag](./01_concealment_bag.png)
+![Concealment in bag example](./01_concealment_bag.png)
 
-### Concealment in clothing
+### Concealment in Clothing
 
-![Storyboard: concealment in clothing](./02_concealment_clothing.png)
+![Concealment in clothing example](./02_concealment_clothing.png)
 
-### Shelf sweep
+### Shelf Sweep
 
-![Storyboard: shelf sweep](./03_shelf_sweep.png)
+![Shelf sweep example](./03_shelf_sweep.png)
 
-### Self checkout skip scan
+### Self Checkout Skip Scan
 
-![Storyboard: self checkout skip scan](./04_skip_scan.png)
+![Skip scan example](./04_skip_scan.png)
 
-![Animated replay: self checkout skip scan](./04_skip_scan.gif)
+Animated view showing real time detection:
 
-### Ticket switch
+![Skip scan animation](./04_skip_scan.gif)
 
-![Storyboard: ticket switch](./05_ticket_switch.png)
+### Ticket Switch
 
-### Sweethearting at the till
+![Ticket switch example](./05_ticket_switch.png)
 
-![Storyboard: sweethearting at the till](./06_sweethearting.png)
+### Sweethearting at Till
 
-### Trolley push out
+![Sweethearting example](./06_sweethearting.png)
 
-![Storyboard: trolley push out](./07_push_out.png)
+### Trolley Push Out
 
-### Honest behaviour that looks similar, correctly left alone
+![Trolley push out example](./07_push_out.png)
 
-![Storyboard: scan and go, no alert](./08_benign_scan_and_go.png)
+### Legitimate Behavior Correctly Excluded
 
-![Carry in hand, no alert](./09_benign_carry_in_hand.png)
+The system must distinguish genuine shopping from theft. Examples below show honest behavior that triggers no alerts.
 
-![Own bag on the scale, no alert](./10_benign_own_bag.png)
+![Scan and go legitimate behavior](./08_benign_scan_and_go.png)
 
-### Where it goes wrong
+Customer using scan and go service, packing items into personal bag immediately after scanning each item.
+
+![Carrying items by hand](./09_benign_carry_in_hand.png)
+
+Customer carrying items in hand before reaching basket or checkout.
+
+![Own bag on scale](./10_benign_own_bag.png)
+
+Customer placing personal shopping bag on self checkout baggage scale.
+
+### Detection Failures and False Alerts
+
+The detector does make mistakes. These examples show realistic failure cases from the test set.
 
 ![Missed concealment in low light](./11_missed_concealment.png)
 
-![False alert on a click-and-collect customer](./12_false_alert_collection.png)
+Low light camera in crowded store causes skeleton tracking to drop out, allowing concealment to go undetected.
 
-## How it works
+![False alert on click and collect](./12_false_alert_collection.png)
 
-![Architecture: from anonymous signals to a reviewed alert](./architecture.png)
+Click and collect customer picking up pre paid order incorrectly flagged as theft due to minimal time in checkout.
 
-1. **Perception** runs at the store edge and emits anonymous streams: 17 pose keypoints per tracked person, item-in-hand and bag detections, basket and bagging counts, shelf sensor events, and till activity.
-2. **A shared clip schema** holds one tracked person for 12.8 seconds at 5 frames per second: keypoints of shape `(64, 17, 3)`, signals of shape `(64, 15)`, journey context and event metadata.
-3. **Sixty-two interpretable features** are computed per clip in four families: pose, item flow, point of sale and context.
-4. **The detector** is a gradient-boosted tree classifier over eight classes, trained on complete clips and partial clips so it can score while a clip is still unfolding.
-5. **The alert policy** chooses, for every scenario, the lowest threshold that meets a precision target.
-6. **An evidence packet** is built for each alert: a timeline of detected events, the features that moved the score and how they compare with normal clips on that camera.
-7. **A language model narrator** turns the packet into a five-part brief. The reply is parsed, checked against a schema and passed through a language guard.
-8. **A human reviewer** reads the brief, looks at the storyboard, rules out innocent explanations and decides what to do.
+## System Architecture
 
-## The data
+![System architecture diagram](./architecture.png)
 
-The corpus holds 250,000 single-person track clips: 16 million frames, or 889 hours of tracked footage, across 40 simulated stores in three formats (convenience, supermarket and superstore).
+The complete pipeline flows from perception to human decision making.
 
-![Corpus composition by behaviour and camera](./dataset_composition.png)
+1. Perception layer runs at store edge emitting anonymous streams: 17 pose keypoints per tracked person, hand and bag position detections, basket and bagging counts, shelf sensor events and till activity.
 
-The corpus is simulated because real, labelled, multi-sensor footage of shoplifting cannot be shared. The [data card](./data_card.md) documents the schema, the behaviours, the sensor model and the evaluation assumptions.
+2. Clip schema packages 12.8 seconds of continuous tracking at 5 frames per second into keypoints of shape (64, 17, 3) plus signals of shape (64, 15) with journey metadata.
 
-## Findings
+3. Feature extraction computes 62 interpretable features across four families: pose kinematics, item flow dynamics, point of sale alignment and contextual factors. Each feature has plain language documentation.
 
-### 1. The till is the best camera in the building
+4. Detection model is a gradient boosted tree classifier trained on both complete clips and partial clips to enable live scoring as events unfold.
 
-![Sensor ablation: recall by scenario as sensor families are added](./sensor_ablation.png)
+5. Alert policy sets per scenario thresholds to meet precision targets at deployment theft prevalence. Separate thresholds for review tier (80% precision) and priority tier (95% precision).
 
-### 2. A learned detector beats rules on the scenarios that matter most to customers
+6. Evidence packet compiles for each alert: timeline of detected events, features influencing the decision, comparison with normal behavior on that camera and data quality indicators.
 
-![Recall and precision by scenario](./per_scenario_performance.png)
+7. Language model narrator converts evidence packet into five part structured brief readable in ten seconds, with parsed output validation and content filtering.
 
-### 3. The base rate decides whether the product is usable
+8. Human reviewer reads structured brief, examines visual storyboard, rules out innocent explanations using scenario playbook and makes final decision.
 
-![Alert precision against theft prevalence](./precision_vs_prevalence.png)
+## Training Dataset
 
-### 4. More alerts stop paying for themselves quickly
+The corpus contains 250,000 single person track clips representing 16 million frames or 889 hours across 40 simulated stores in three formats (convenience, supermarket and superstore).
 
-![Net value against reviewer workload](./economics_curve.png)
+![Dataset composition](./dataset_composition.png)
 
-### 5. The remaining false alerts have a name
+Key dataset design choices:
 
-![False alert rate by benign behaviour](./false_alert_sources.png)
+Hard negatives are first class. The model succeeds or fails on honest behaviors resembling theft: scan and go, own bag use, quantity key, reduced to clear, void transactions, handling by staff and bulk purchases.
 
-### 6. Low light costs seven points of recall
+Theft is enriched then reweighted. Base theft rate is 13.7 percent ensuring each scenario has over 4,000 examples. All metrics are reweighted to 1 in 200 deployment prevalence for accurate precision reporting.
 
-![Robustness by camera quality, crowding and store format](./robustness_slices.png)
+Stores are split never clipped. 26 stores train the model, 7 calibrate thresholds, 7 remain held out for testing stratified by format. This measures transfer learning not memorization.
 
-### 7. Scoring a clip live is a different problem from scoring it afterwards
+Noise is part of the label. Low light, crowding and occlusion degrade perception. Some benign clips are intentionally ambiguous so ceiling performance is naturally below 100 percent.
 
-![False alerts when scoring live against scoring complete clips](./streaming_false_alerts.png)
+Reproducible bit for bit. The entire 250,000 clip corpus generates from a single seed in eight minutes on one CPU core. Feature shards are committed so training is deterministic.
 
-### 8. Where live alerts are used, they arrive in time to act
+The corpus is entirely synthetic because real labeled multi sensor footage of shoplifting cannot be ethically or legally shared. See the data card for documentation of sensor models, behavior scripts and evaluation methodology.
+
+## Research Findings
+
+### Finding 1: Till is Most Informative Sensor
+
+![Sensor ablation chart](./sensor_ablation.png)
+
+Training on expanding sensor sets reveals information distribution. Pose alone reaches macro F1 of 0.58 and misses ticket switches and sweethearting entirely. Till sensors add nearly all remaining signal.
+
+### Finding 2: Learning Beats Handwritten Rules
+
+![Per scenario performance](./per_scenario_performance.png)
+
+Rule baseline achieves respectable 77 percent recall but only 15 percent precision. Weakest on scenarios closest to honest behavior: 6 percent precision on skip scan, 8 percent on sweethearting. Learned model outperforms on every scenario.
+
+### Finding 3: Base Rate Determines Usability
+
+![Precision versus theft rate](./precision_vs_prevalence.png)
+
+Same model with same thresholds delivers different precision at different theft prevalences. At 1 in 1000 theft precision is 66 percent. At 1 in 200 it reaches 91 percent. High base rate substantially improves practical usability.
+
+### Finding 4: Economics Curve Shows Diminishing Returns
+
+![Economics curve](./economics_curve.png)
+
+Net value per store peaks around 13 alerts per day then declines as analyst time and management overhead grow faster than recovered value.
+
+### Finding 5: False Alerts Cluster in Specific Behaviors
+
+![False alert sources](./false_alert_sources.png)
+
+Only 19 of 39,773 honest test clips trigger review tier alerts. These are not random. Click and collect customers are flagged at 20 per 1000, over ten times any other behavior. Targeted handling of this case eliminates most false alerts.
+
+### Finding 6: Lighting and Crowding Impact Recall
+
+![Robustness across conditions](./robustness_slices.png)
+
+Recall drops from 94 percent on HD cameras to 86.5 percent in low light, costing seven points. False alert rate rises five fold from 0.2 to 1.1 per 1000 honest clips. Crowding causes less degradation than lighting.
+
+### Finding 7: Live Scoring is Different Problem
+
+![Live versus batch scoring](./streaming_false_alerts.png)
+
+Model trained only on complete clips raised transient alerts on 43 per 1000 honest clips when scored frame by frame. Adding confirmation rules brought this to 2.7 per 1000. Live scoring requires different training or post processing.
+
+### Finding 8: Detection Latency Enables Action
 
 ![Detection latency by scenario](./detection_latency.png)
 
-## The language model layer
+With confirmation rules in place, concealment alerts fire median 1 second after item disappears and skip scan alerts 1.4 seconds after unscanned item enters bag. This provides actionable time at checkouts.
 
-A risk score of 0.97 is not something a duty manager can act on. The narrator turns each alert into a brief that can be read in ten seconds.
+### Finding 9: Three Honest Caveats
 
-How the layer is built:
+Thresholds set on rare events did not transfer. Validation set precision targets were met on training stores but failed on held out test stores. Alert policy was redesigned to account for this.
 
-* Closed evidence: the model receives a JSON evidence packet and never sees video or a face.
-* Behaviour, never people: the prompt bans descriptions of appearance and demographic attributes.
-* Checked output: the reply must parse as JSON with required fields and pass a language guard.
-* Two narrators: the default template narrator and optional Claude-based narrator.
+Priority tier misses its 95 percent precision target, delivering 93 percent instead. At deployment prevalence 95 percent precision is mathematically difficult to achieve with finite test set and natural noise floor.
 
-## Responsible use
+Isotonic calibration made validation calibration error worse so raw probabilities were retained. Calibration testing showed no benefit from post processing.
 
-A system like this can do harm if it is deployed carelessly, so the safeguards are part of the design and are documented in [responsible_use.md](./responsible_use.md).
+## Explanation and Narrative
 
-* It models what happens to items, not who a person is.
-* It produces review requests, not accusations.
-* It is evaluated for honest shoppers first: precision targets, false alerts per honest clip, and named sources of false alerts are headline metrics.
-* It should not be used to detain, search or ban anyone, or without data protection impact assessment and clear signage.
+A raw risk score of 0.97 means nothing to a store manager. The explanation layer turns each alert into a brief that is comprehensible and actionable in ten seconds.
 
-## Quick start
+The layer works through:
 
-```bash
+Closed evidence architecture. The language model receives structured JSON packet with event timeline, feature values and camera statistics. It never sees video, faces, or unrestricted external knowledge.
+
+Behavior not people. System prompt explicitly bans appearance descriptions, demographic information, accusatory language and personally identifying details. All explanations reframe findings as item reconciliation.
+
+Validated output. All narratives must parse as valid JSON with required fields. Content is checked against language guard that rejects demographic terms or accusatory framing.
+
+Dual narrator design. Template narrator runs offline as default. Claude based narrator optionally connects through Anthropic API for more sophisticated explanation when needed.
+
+## Responsible Deployment
+
+This system can cause harm if deployed without safeguards. Design principles are documented in responsible use guide.
+
+The system models items not people. No faces, no identities, no demographic inputs and no memory of individuals between separate clips.
+
+System produces review requests not accusations. Every alert includes innocent explanations and playbook response includes offer of help before any investigation.
+
+Evaluation prioritizes honest shoppers. Precision targets, false alert rates on legitimate behavior and named sources of false alerts are primary metrics.
+
+System should never be used to detain, search or ban anyone, to score staff performance, or without data protection impact assessment and clear public signage. Staff facing scenarios route through separate adjudication paths.
+
+## Quick Start
+
+Clone the repository and set up environment:
+
+```
 git clone https://github.com/ANTHONY-CHINEDU-ECHEM/SENTINEL-AI.git
 cd SENTINEL-AI
-python -m venv .venv
+python m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install r requirements.txt
 python quickstart.py
 ```
 
-If the repo already contains the trained model, feature shards and sample data, the example above works immediately. To rebuild the full corpus and evaluation assets from the seed, use the project’s existing automation and scripts in the repository root.
+The repository includes trained model, feature shards and sample clips so this runs immediately. To rebuild all assets from scratch:
 
-## Repository map
+```
+make all
+```
 
-```text
-.
+For rapid iteration on a subset:
+
+```
+make quick
+```
+
+Use as a Python library:
+
+```python
+from shelfsentinel.explain import TemplateNarrator, build_evidence
+from shelfsentinel.features import extract_features
+from shelfsentinel.models import SentinelModel
+from shelfsentinel.schema import ClipBatch
+
+clips = ClipBatch.load("data/sample/clips_sample.npz")
+model = SentinelModel.load("models/sentinel.joblib")
+
+assessment = model.assess(extract_features(clips))
+evidence = build_evidence(model, clips, index=9)
+print(TemplateNarrator().narrate(evidence).to_markdown())
+```
+
+## Repository Structure
+
+```
+SENTINEL-AI/
+├── README.md
 ├── architecture.md
 ├── architecture.png
-├── behaviour scripts and simulation code
 ├── data_card.md
 ├── feature_dictionary.md
-├── hero.png
 ├── model_card.md
-├── quickstart.py
-├── real_footage.md
 ├── responsible_use.md
 ├── scenario_playbook.md
+├── real_footage.md
+├── hero.png
 ├── sentinel.joblib
+├── quickstart.py
 ├── 01_concealment_bag.png
 ├── 02_concealment_clothing.png
 ├── 03_shelf_sweep.png
 ├── 04_skip_scan.png
+├── 04_skip_scan.gif
 ├── 05_ticket_switch.png
 ├── 06_sweethearting.png
 ├── 07_push_out.png
@@ -201,7 +297,6 @@ If the repo already contains the trained model, feature shards and sample data, 
 ├── 10_benign_own_bag.png
 ├── 11_missed_concealment.png
 ├── 12_false_alert_collection.png
-├── metrics.json
 ├── model_comparison.png
 ├── dataset_composition.png
 ├── per_scenario_performance.png
@@ -212,19 +307,52 @@ If the repo already contains the trained model, feature shards and sample data, 
 ├── detection_latency.png
 ├── sensor_ablation.png
 ├── streaming_false_alerts.png
-└── README.md
+├── confusion_matrix.png
+├── calibration.png
+├── feature_importance.png
+├── detection_latency.csv
+├── economics_curve.csv
+├── false_alert_sources.csv
+├── precision_vs_prevalence.csv
+├── robustness_slices.csv
+├── sensor_ablation.csv
+└── metrics.json
 ```
 
-## Further reading in this repository
+## Documentation
 
-* [Architecture](./architecture.md)
-* [Data card](./data_card.md)
-* [Model card](./model_card.md)
-* [Scenario playbook](./scenario_playbook.md)
-* [Feature dictionary](./feature_dictionary.md)
-* [Responsible use](./responsible_use.md)
-* [Real footage guide](./real_footage.md)
+Full documentation is available in the following files:
+
+Architecture: System design and data flow documentation
+Data Card: Dataset composition, behaviors and sensor model specification
+Model Card: Training procedure, hyperparameters and validation results
+Feature Dictionary: Complete reference of 62 extracted features
+Scenario Playbook: Response procedures for each detection type
+Responsible Use: Deployment safeguards and ethical considerations
+Real Footage Guide: Integration path from synthetic training to production systems
+
+## Limitations and Future Work
+
+The corpus is entirely synthetic. Behaviors are scripted from loss prevention domain practice. Real world perception errors are messier and more varied than the sensor model captures.
+
+Single person tracking. The system handles one tracked individual per clip. Distraction teams, handoffs between people and coordinated theft are not modeled.
+
+Economics use illustrative costs. Analysis shows the shape of cost benefit tradeoff but not a complete business case for deployment.
+
+Live scoring still generates higher false alert rates than batch processing. Two alert tiers currently sit below their precision targets on certain scenarios.
+
+Future work will include validation on real footage from PoseLift and other trackers, sequence models over raw sensor channels, per store group threshold learning with uncertainty quantification and active learning pipelines for continuous model refinement.
+
+## Citation and References
+
+British Retail Consortium Crime Report 2026: Comprehensive analysis of retail theft trends and costs in UK market.
+
+Rashvand and colleagues, Exploring Pose Based Anomaly Detection for Retail Security: A Real World Shoplifting Dataset and Benchmark, WACV Workshops 2025: Foundational work on pose based detection for loss prevention.
 
 ## License
 
-Released under the MIT licence.
+Released under MIT License. See LICENSE file for complete terms.
+
+## Contact
+
+For questions or collaboration inquiries please open an issue in the repository.

@@ -1,0 +1,48 @@
+# Shelf Sentinel AI: full scale configuration.
+# Every value here overrides the defaults in src/shelfsentinel/config.py.
+
+data:
+  n_clips: 250000        # 16 million frames, about 889 hours of single person track footage
+  shard_size: 5000
+  n_frames: 64           # 12.8 seconds per clip
+  fps: 5.0
+  n_stores: 40
+  seed: 2026
+  raw_sample_shards: 1   # keep raw keypoints for the first shard only
+  prefix_clips: 50000    # extra clips cut into partial windows for streaming aware training
+  prefixes_per_clip: 2
+  out_dir: data/generated
+
+split:                   # stores are split, never clips
+  train_frac: 0.65
+  val_frac: 0.175
+  seed: 7
+
+model:
+  max_iter: 300
+  learning_rate: 0.08
+  max_leaf_nodes: 31
+  l2_regularization: 0.5
+  min_samples_leaf: 40
+  early_stopping_rounds: 20
+  seed: 11
+  out_dir: models
+
+policy:
+  deployment_theft_prevalence: 0.005   # one track clip in 200 contains theft
+  review_precision_target: 0.80
+  priority_precision_target: 0.95
+  min_threshold: 0.20
+  phantom_false_alerts: 1.0             # review thresholds must survive one more false alert in validation
+
+economics:               # illustrative; replace with your own figures
+  review_cost_gbp: 0.45
+  recovery_rate: 0.30
+  false_alert_friction_gbp: 0.30
+  clips_per_store_day: 2000
+
+narrator:
+  provider: template     # set to anthropic and export ANTHROPIC_API_KEY to use Claude
+  model: claude-sonnet-5-5
+  max_tokens: 700
+  attach_keyframes: true

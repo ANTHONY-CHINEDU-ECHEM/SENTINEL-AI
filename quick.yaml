@@ -1,0 +1,12 @@
+# Five minute configuration for laptops and continuous integration.
+data:
+  n_clips: 20000
+  shard_size: 5000
+  prefix_clips: 5000
+  out_dir: data/quick
+model:
+  max_iter: 120
+policy:
+  # A 20,000 clip run has too little validation data to support the production
+  # safety margin: with it, most scenarios would be switched off.
+  phantom_false_alerts: 0.0

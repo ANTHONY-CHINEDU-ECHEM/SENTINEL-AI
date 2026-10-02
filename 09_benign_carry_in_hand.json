@@ -1,0 +1,113 @@
+{
+  "brief": {
+    "headline": "No alert: behaviour on the aisle camera is consistent with normal shopping.",
+    "observed": [
+      "At 1.4 s: An item was taken from the shelf.",
+      "At 2.8 s: Item in the right hand was last seen at the waist; no basket, shelf or scan event explains it.",
+      "At 4.4 s: An item was taken from the shelf."
+    ],
+    "benign_explanations": [],
+    "recommended_action": "No action needed.",
+    "confidence_note": "Probability of normal behaviour is 1.00.",
+    "provider": "template",
+    "fallback_reason": null
+  },
+  "evidence": {
+    "clip_id": "S808C00004",
+    "camera": "Aisle",
+    "duration_s": 12.8,
+    "assessment": {
+      "tier": "clear",
+      "scenario": "Concealment in a bag",
+      "scenario_id": 1,
+      "risk": 0.0,
+      "probability_normal": 1.0
+    },
+    "drivers": [
+      {
+        "feature": "width_mean",
+        "label": "Average torso width",
+        "meaning": "Apparent shoulder width; low values mean side on to the camera",
+        "value": 0.17,
+        "typical": 0.19,
+        "typical_low": 0.15,
+        "typical_high": 0.22,
+        "differs_from_typical": false,
+        "evidence_weight": 0.54
+      },
+      {
+        "feature": "container_present",
+        "label": "Basket or trolley visible",
+        "meaning": "Share of frames with a basket or trolley detected",
+        "value": 0.0,
+        "typical": 1.0,
+        "typical_low": 0.0,
+        "typical_high": 1.0,
+        "differs_from_typical": true,
+        "evidence_weight": 0.24
+      },
+      {
+        "feature": "speed_max",
+        "label": "Peak walking speed",
+        "meaning": "Fastest sustained movement in the clip, in body heights per second",
+        "value": 0.3,
+        "typical": 0.19,
+        "typical_low": 0.02,
+        "typical_high": 0.42,
+        "differs_from_typical": true,
+        "evidence_weight": 0.22
+      }
+    ],
+    "timeline": [
+      {
+        "t": 1.4,
+        "kind": "item_taken",
+        "text": "An item was taken from the shelf"
+      },
+      {
+        "t": 2.8,
+        "kind": "item_vanished",
+        "text": "Item in the right hand was last seen at the waist; no basket, shelf or scan event explains it"
+      },
+      {
+        "t": 4.4,
+        "kind": "item_taken",
+        "text": "An item was taken from the shelf"
+      },
+      {
+        "t": 4.8,
+        "kind": "item_vanished",
+        "text": "Item in the left hand was last seen away from the body; no basket, shelf or scan event explains it"
+      },
+      {
+        "t": 8.2,
+        "kind": "item_vanished",
+        "text": "Item in the right hand was last seen at the waist; no basket, shelf or scan event explains it"
+      },
+      {
+        "t": 8.4,
+        "kind": "item_vanished",
+        "text": "Item in the left hand was last seen away from the body; no basket, shelf or scan event explains it"
+      },
+      {
+        "t": 10.4,
+        "kind": "item_vanished",
+        "text": "Item in the right hand was last seen at the waist; no basket, shelf or scan event explains it"
+      },
+      {
+        "t": 11.0,
+        "kind": "item_vanished",
+        "text": "Item in the left hand was last seen away from the body; no basket, shelf or scan event explains it"
+      },
+      {
+        "t": 12.4,
+        "kind": "item_vanished",
+        "text": "Item in the left hand was last seen away from the body; no basket, shelf or scan event explains it"
+      }
+    ],
+    "data_quality": {
+      "pose_confidence": 0.83,
+      "arm_hidden_share": 0.08
+    }
+  }
+}

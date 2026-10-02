@@ -1,0 +1,141 @@
+{
+  "brief": {
+    "headline": "No alert: behaviour on the aisle camera is consistent with normal shopping.",
+    "observed": [
+      "At 0.2 s: Item in the right hand was last seen at a personal bag; no basket, shelf or scan event explains it.",
+      "At 3.0 s: An item was taken from the shelf.",
+      "At 4.2 s: Scan registered (product match 0.70)."
+    ],
+    "benign_explanations": [],
+    "recommended_action": "No action needed.",
+    "confidence_note": "Probability of normal behaviour is 1.00.",
+    "provider": "template",
+    "fallback_reason": null
+  },
+  "evidence": {
+    "clip_id": "S807C00017",
+    "camera": "Aisle",
+    "duration_s": 12.8,
+    "assessment": {
+      "tier": "clear",
+      "scenario": "Concealment in a bag",
+      "scenario_id": 1,
+      "risk": 0.0,
+      "probability_normal": 1.0
+    },
+    "drivers": [
+      {
+        "feature": "vanish_unexplained_near_bag",
+        "label": "Unexplained release at bag",
+        "meaning": "Item vanished at a personal bag with nothing to explain it",
+        "value": 1.0,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 0.0,
+        "differs_from_typical": true,
+        "evidence_weight": 1.81
+      },
+      {
+        "feature": "vanish_unexplained",
+        "label": "Unexplained disappearances",
+        "meaning": "Items that left the hand with no basket, shelf, bagging or scan event to explain it",
+        "value": 1.0,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 2.0,
+        "differs_from_typical": true,
+        "evidence_weight": 0.97
+      },
+      {
+        "feature": "hand_item_end",
+        "label": "Item still in hand at end",
+        "meaning": "One when merchandise is visible in a hand as the clip ends",
+        "value": 1.0,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 1.0,
+        "differs_from_typical": true,
+        "evidence_weight": 0.64
+      },
+      {
+        "feature": "near_bag_frac",
+        "label": "Hand at personal bag",
+        "meaning": "Largest share of the clip either hand spent at a personal bag",
+        "value": 0.2,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 0.75,
+        "differs_from_typical": true,
+        "evidence_weight": 0.48
+      },
+      {
+        "feature": "container_present",
+        "label": "Basket or trolley visible",
+        "meaning": "Share of frames with a basket or trolley detected",
+        "value": 0.0,
+        "typical": 1.0,
+        "typical_low": 0.0,
+        "typical_high": 1.0,
+        "differs_from_typical": true,
+        "evidence_weight": 0.36
+      },
+      {
+        "feature": "vanish_near_bag",
+        "label": "Items released at personal bag",
+        "meaning": "Items that left the hand while the hand was at a personal bag",
+        "value": 2.0,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 1.0,
+        "differs_from_typical": true,
+        "evidence_weight": 0.29
+      }
+    ],
+    "timeline": [
+      {
+        "t": 0.2,
+        "kind": "item_vanished",
+        "text": "Item in the right hand was last seen at a personal bag; no basket, shelf or scan event explains it"
+      },
+      {
+        "t": 3.0,
+        "kind": "item_taken",
+        "text": "An item was taken from the shelf"
+      },
+      {
+        "t": 4.2,
+        "kind": "scan",
+        "text": "Scan registered (product match 0.70)"
+      },
+      {
+        "t": 6.6,
+        "kind": "item_taken",
+        "text": "An item was taken from the shelf"
+      },
+      {
+        "t": 7.6,
+        "kind": "scan",
+        "text": "Scan registered (product match 0.80)"
+      },
+      {
+        "t": 10.6,
+        "kind": "item_taken",
+        "text": "An item was taken from the shelf"
+      },
+      {
+        "t": 11.8,
+        "kind": "scan",
+        "text": "Scan registered (product match 1.00)"
+      },
+      {
+        "t": 12.4,
+        "kind": "bagged_after_scan",
+        "text": "Item placed in a personal bag by the right hand after a scan"
+      }
+    ],
+    "data_quality": {
+      "pose_confidence": 0.84,
+      "arm_hidden_share": 0.08
+    }
+  }
+}

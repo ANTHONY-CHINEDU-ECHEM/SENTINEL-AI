@@ -1,0 +1,132 @@
+{
+  "brief": {
+    "headline": "Priority alert: possible concealment in clothing on the aisle camera.",
+    "observed": [
+      "At 2.8 s: An item was taken from the shelf.",
+      "At 4.0 s: Item in the left hand was last seen at the waist; no basket, shelf or scan event explains it.",
+      "At 6.4 s: Item in the left hand was last seen away from the body; no basket, shelf or scan event explains it.",
+      "Hand at waist was 0.12; the typical value for normal clips on this camera is 0 (range 0 to 0.16).",
+      "Unaccounted items was 2; the typical value for normal clips on this camera is 0 (range -6 to 1)."
+    ],
+    "benign_explanations": [
+      "The shopper is carrying the item against their body because they have no basket.",
+      "The hand went to a pocket for a phone or keys and the item detector lost the product.",
+      "The camera view was blocked by another shopper at the key moment."
+    ],
+    "recommended_action": "Send a colleague to greet the shopper and offer a basket. Do not stop or search. Review the footage in full before any further step.",
+    "confidence_note": "Model risk is 1.00, which is strong evidence for this scenario. Pose tracking was clear throughout the clip.",
+    "provider": "template",
+    "fallback_reason": null
+  },
+  "evidence": {
+    "clip_id": "S801C00004",
+    "camera": "Aisle",
+    "duration_s": 12.8,
+    "assessment": {
+      "tier": "priority",
+      "scenario": "Concealment in clothing",
+      "scenario_id": 2,
+      "risk": 1.0,
+      "probability_normal": 0.0
+    },
+    "drivers": [
+      {
+        "feature": "near_waist_frac",
+        "label": "Hand at waist",
+        "meaning": "Largest share of the clip either hand spent at the waistband",
+        "value": 0.12,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 0.16,
+        "differs_from_typical": true,
+        "evidence_weight": 18.83
+      },
+      {
+        "feature": "unaccounted_items",
+        "label": "Unaccounted items",
+        "meaning": "Items taken minus items returned, basketed, scanned or still in hand",
+        "value": 2.0,
+        "typical": 0.0,
+        "typical_low": -6.0,
+        "typical_high": 1.0,
+        "differs_from_typical": true,
+        "evidence_weight": 1.04
+      },
+      {
+        "feature": "vanish_unexplained_near_waist",
+        "label": "Unexplained release at waist",
+        "meaning": "Item vanished at the waistband with nothing to explain it",
+        "value": 1.0,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 1.0,
+        "differs_from_typical": true,
+        "evidence_weight": 0.83
+      },
+      {
+        "feature": "kp_conf_mean",
+        "label": "Pose confidence",
+        "meaning": "Mean confidence of the upper body keypoints",
+        "value": 0.84,
+        "typical": 0.82,
+        "typical_low": 0.77,
+        "typical_high": 0.84,
+        "differs_from_typical": false,
+        "evidence_weight": 0.79
+      },
+      {
+        "feature": "item_frames_frac",
+        "label": "Share of clip holding an item",
+        "meaning": "Share of the clip with merchandise seen in a hand",
+        "value": 0.11,
+        "typical": 0.19,
+        "typical_low": 0.0,
+        "typical_high": 0.58,
+        "differs_from_typical": false,
+        "evidence_weight": 0.67
+      },
+      {
+        "feature": "face_visible_frac",
+        "label": "Face towards camera",
+        "meaning": "Share of frames where the face keypoints are confidently seen",
+        "value": 0.03,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 0.0,
+        "differs_from_typical": false,
+        "evidence_weight": 0.63
+      }
+    ],
+    "timeline": [
+      {
+        "t": 2.8,
+        "kind": "item_taken",
+        "text": "An item was taken from the shelf"
+      },
+      {
+        "t": 4.0,
+        "kind": "item_vanished",
+        "text": "Item in the left hand was last seen at the waist; no basket, shelf or scan event explains it"
+      },
+      {
+        "t": 5.8,
+        "kind": "item_taken",
+        "text": "An item was taken from the shelf"
+      },
+      {
+        "t": 6.4,
+        "kind": "item_vanished",
+        "text": "Item in the left hand was last seen away from the body; no basket, shelf or scan event explains it"
+      },
+      {
+        "t": 6.8,
+        "kind": "head_turn",
+        "text": "Head turned to the side"
+      }
+    ],
+    "data_quality": {
+      "pose_confidence": 0.84,
+      "arm_hidden_share": 0.05
+    }
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "brief": {
+    "headline": "No alert: behaviour on the self checkout camera is consistent with normal shopping.",
+    "observed": [
+      "At 0.8 s: Bagging count rose to 1 with no scan in the two seconds before.",
+      "At 2.6 s: Scan registered (product match 0.90).",
+      "At 4.0 s: Item placed in a personal bag by the left hand after a scan."
+    ],
+    "benign_explanations": [],
+    "recommended_action": "No action needed.",
+    "confidence_note": "Probability of normal behaviour is 1.00.",
+    "provider": "template",
+    "fallback_reason": null
+  },
+  "evidence": {
+    "clip_id": "S809C00005",
+    "camera": "Self checkout",
+    "duration_s": 12.8,
+    "assessment": {
+      "tier": "clear",
+      "scenario": "Self checkout skip scan",
+      "scenario_id": 4,
+      "risk": 0.0,
+      "probability_normal": 1.0
+    },
+    "drivers": [
+      {
+        "feature": "speed_max",
+        "label": "Peak walking speed",
+        "meaning": "Fastest sustained movement in the clip, in body heights per second",
+        "value": 0.02,
+        "typical": 0.03,
+        "typical_low": 0.02,
+        "typical_high": 0.06,
+        "differs_from_typical": false,
+        "evidence_weight": 0.55
+      },
+      {
+        "feature": "mean_hold_s",
+        "label": "Average hold time in seconds",
+        "meaning": "Mean duration of an item in hand episode, in seconds",
+        "value": 1.0,
+        "typical": 0.91,
+        "typical_low": 0.71,
+        "typical_high": 1.25,
+        "differs_from_typical": false,
+        "evidence_weight": 0.47
+      },
+      {
+        "feature": "path_length",
+        "label": "Distance covered",
+        "meaning": "Straight line distance between first and last position, in body heights",
+        "value": 0.01,
+        "typical": 0.01,
+        "typical_low": 0.0,
+        "typical_high": 0.03,
+        "differs_from_typical": false,
+        "evidence_weight": 0.35
+      },
+      {
+        "feature": "kp_conf_mean",
+        "label": "Pose confidence",
+        "meaning": "Mean confidence of the upper body keypoints",
+        "value": 0.84,
+        "typical": 0.82,
+        "typical_low": 0.77,
+        "typical_high": 0.84,
+        "differs_from_typical": false,
+        "evidence_weight": 0.29
+      },
+      {
+        "feature": "scan_dwell_mean_s",
+        "label": "Scanner dwell per item",
+        "meaning": "Seconds an item spent over the scanner per transfer",
+        "value": 1.55,
+        "typical": 1.6,
+        "typical_low": 1.1,
+        "typical_high": 2.8,
+        "differs_from_typical": false,
+        "evidence_weight": 0.24
+      },
+      {
+        "feature": "pos_total",
+        "label": "Quantity scanned",
+        "meaning": "Net quantity registered by the point of sale",
+        "value": 4.0,
+        "typical": 5.0,
+        "typical_low": 3.0,
+        "typical_high": 7.0,
+        "differs_from_typical": false,
+        "evidence_weight": 0.21
+      }
+    ],
+    "timeline": [
+      {
+        "t": 0.8,
+        "kind": "unscanned_bagging",
+        "text": "Bagging count rose to 1 with no scan in the two seconds before"
+      },
+      {
+        "t": 2.6,
+        "kind": "scan",
+        "text": "Scan registered (product match 0.90)"
+      },
+      {
+        "t": 4.0,
+        "kind": "bagged_after_scan",
+        "text": "Item placed in a personal bag by the left hand after a scan"
+      },
+      {
+        "t": 5.0,
+        "kind": "scan",
+        "text": "Scan registered (product match 0.89)"
+      },
+      {
+        "t": 6.6,
+        "kind": "bagged_after_scan",
+        "text": "Item placed in a personal bag by the left hand after a scan"
+      },
+      {
+        "t": 7.6,
+        "kind": "scan",
+        "text": "Scan registered (product match 0.97)"
+      },
+      {
+        "t": 9.0,
+        "kind": "bagged_after_scan",
+        "text": "Item placed in a personal bag by the left hand after a scan"
+      },
+      {
+        "t": 10.4,
+        "kind": "scan",
+        "text": "Scan registered (product match 0.79)"
+      },
+      {
+        "t": 11.4,
+        "kind": "bagged_after_scan",
+        "text": "Item placed in a personal bag by the left hand after a scan"
+      },
+      {
+        "t": 12.2,
+        "kind": "item_taken",
+        "text": "An item was taken from the shelf"
+      }
+    ],
+    "data_quality": {
+      "pose_confidence": 0.84,
+      "arm_hidden_share": 0.08
+    }
+  }
+}

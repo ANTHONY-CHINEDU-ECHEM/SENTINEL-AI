@@ -1,0 +1,1017 @@
+{
+  "dataset": {
+    "clips": 250000,
+    "stores": 40,
+    "stores_by_split": {
+      "test": 7,
+      "train": 26,
+      "val": 7
+    },
+    "clips_by_split": {
+      "test": 46673,
+      "train": 162803,
+      "val": 40524
+    },
+    "clips_by_scenario": {
+      "Normal shopping": 215703,
+      "Concealment in a bag": 5427,
+      "Concealment in clothing": 5345,
+      "Shelf sweep": 4415,
+      "Self checkout skip scan": 5273,
+      "Ticket switch": 4219,
+      "Sweethearting at the till": 4144,
+      "Trolley push out": 5474
+    },
+    "clips_by_scene": {
+      "Aisle": 149612,
+      "Self checkout": 42684,
+      "Staffed till": 25840,
+      "Store exit": 31864
+    },
+    "benign_subtypes": 25,
+    "theft_share": 0.1372,
+    "camera_quality_share": {
+      "hd": 0.421,
+      "sd": 0.395,
+      "low_light": 0.184
+    }
+  },
+  "config": {
+    "data": {
+      "n_clips": 250000,
+      "shard_size": 5000,
+      "n_frames": 64,
+      "fps": 5.0,
+      "n_stores": 40,
+      "seed": 2026,
+      "raw_sample_shards": 1,
+      "prefix_clips": 50000,
+      "prefixes_per_clip": 2,
+      "out_dir": "data/generated"
+    },
+    "split": {
+      "train_frac": 0.65,
+      "val_frac": 0.175,
+      "seed": 7
+    },
+    "model": {
+      "max_iter": 300,
+      "learning_rate": 0.08,
+      "max_leaf_nodes": 31,
+      "l2_regularization": 0.5,
+      "min_samples_leaf": 40,
+      "early_stopping_rounds": 20,
+      "seed": 11,
+      "out_dir": "models"
+    },
+    "policy": {
+      "deployment_theft_prevalence": 0.005,
+      "review_precision_target": 0.8,
+      "priority_precision_target": 0.95,
+      "min_threshold": 0.2,
+      "phantom_false_alerts": 1.0
+    },
+    "economics": {
+      "review_cost_gbp": 0.45,
+      "recovery_rate": 0.3,
+      "false_alert_friction_gbp": 0.3,
+      "clips_per_store_day": 2000
+    },
+    "narrator": {
+      "provider": "template",
+      "model": "claude-sonnet-5-5",
+      "max_tokens": 700,
+      "attach_keyframes": true
+    }
+  },
+  "model": {
+    "classification": {
+      "per_class": {
+        "Normal shopping": {
+          "precision": 0.9923,
+          "recall": 0.9973,
+          "f1": 0.9948,
+          "support": 39773
+        },
+        "Concealment in a bag": {
+          "precision": 0.9708,
+          "recall": 0.9249,
+          "f1": 0.9473,
+          "support": 1078
+        },
+        "Concealment in clothing": {
+          "precision": 0.9822,
+          "recall": 0.9739,
+          "f1": 0.978,
+          "support": 1074
+        },
+        "Shelf sweep": {
+          "precision": 0.9878,
+          "recall": 0.9507,
+          "f1": 0.9689,
+          "support": 933
+        },
+        "Self checkout skip scan": {
+          "precision": 0.9559,
+          "recall": 0.8661,
+          "f1": 0.9088,
+          "support": 1001
+        },
+        "Ticket switch": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 735
+        },
+        "Sweethearting at the till": {
+          "precision": 0.9868,
+          "recall": 0.9881,
+          "f1": 0.9875,
+          "support": 757
+        },
+        "Trolley push out": {
+          "precision": 0.9832,
+          "recall": 0.9758,
+          "f1": 0.9795,
+          "support": 1322
+        }
+      },
+      "confusion_matrix": [
+        [
+          39665,
+          17,
+          8,
+          11,
+          40,
+          0,
+          10,
+          22
+        ],
+        [
+          70,
+          997,
+          11,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          15,
+          13,
+          1046,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          46,
+          0,
+          0,
+          887,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          134,
+          0,
+          0,
+          0,
+          867,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          735,
+          0,
+          0
+        ],
+        [
+          9,
+          0,
+          0,
+          0,
+          0,
+          0,
+          748,
+          0
+        ],
+        [
+          32,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1290
+        ]
+      ],
+      "accuracy": 0.9906,
+      "macro_f1": 0.9706,
+      "theft_macro_f1": 0.9671
+    },
+    "ranking": {
+      "theft_roc_auc": 0.999,
+      "theft_ap_enriched": 0.9953,
+      "theft_ap_deployment": 0.9615,
+      "per_class_ap_deployment": {
+        "Concealment in a bag": 0.9317,
+        "Concealment in clothing": 0.9844,
+        "Shelf sweep": 0.9646,
+        "Self checkout skip scan": 0.8271,
+        "Ticket switch": 1.0,
+        "Sweethearting at the till": 0.9902,
+        "Trolley push out": 0.9828
+      }
+    },
+    "calibration": {
+      "isotonic_kept": false,
+      "validation_ece_raw": 0.00511,
+      "validation_ece_isotonic": 0.00697,
+      "test_ece_raw": 0.00589,
+      "test_ece_final": 0.00589
+    },
+    "review_tier": {
+      "alerts_per_10k_clips": 50.5,
+      "precision": 0.9058,
+      "recall": 0.9146,
+      "false_alerts_per_10k_normal": 4.78,
+      "per_class": {
+        "Concealment in a bag": {
+          "recall": 0.8293,
+          "precision": 1.0,
+          "support": 1078
+        },
+        "Concealment in clothing": {
+          "recall": 0.9795,
+          "precision": 0.7935,
+          "support": 1074
+        },
+        "Shelf sweep": {
+          "recall": 0.9335,
+          "precision": 1.0,
+          "support": 933
+        },
+        "Self checkout skip scan": {
+          "recall": 0.7473,
+          "precision": 0.8442,
+          "support": 1001
+        },
+        "Ticket switch": {
+          "recall": 1.0,
+          "precision": 1.0,
+          "support": 735
+        },
+        "Sweethearting at the till": {
+          "recall": 0.9736,
+          "precision": 0.9553,
+          "support": 757
+        },
+        "Trolley push out": {
+          "recall": 0.9637,
+          "precision": 0.8601,
+          "support": 1322
+        }
+      }
+    },
+    "priority_tier": {
+      "alerts_per_10k_clips": 48.2,
+      "precision": 0.9274,
+      "recall": 0.8942,
+      "false_alerts_per_10k_normal": 3.52,
+      "per_class": {
+        "Concealment in a bag": {
+          "recall": 0.743,
+          "precision": 1.0,
+          "support": 1078
+        },
+        "Concealment in clothing": {
+          "recall": 0.9739,
+          "precision": 0.7928,
+          "support": 1074
+        },
+        "Shelf sweep": {
+          "recall": 0.9335,
+          "precision": 1.0,
+          "support": 933
+        },
+        "Self checkout skip scan": {
+          "recall": 0.7223,
+          "precision": 0.8747,
+          "support": 1001
+        },
+        "Ticket switch": {
+          "recall": 1.0,
+          "precision": 1.0,
+          "support": 735
+        },
+        "Sweethearting at the till": {
+          "recall": 0.9657,
+          "precision": 0.9549,
+          "support": 757
+        },
+        "Trolley push out": {
+          "recall": 0.9554,
+          "precision": 0.9482,
+          "support": 1322
+        }
+      }
+    },
+    "economics_review": {
+      "alerts": 504.9,
+      "false_alerts": 47.5,
+      "value_at_risk_gbp": 42971.0,
+      "value_flagged_gbp": 40904.0,
+      "share_of_value_flagged": 0.9519,
+      "recovered_gbp": 12271.0,
+      "review_cost_gbp": 241.0,
+      "net_value_gbp": 12030.0,
+      "alerts_per_store_day": 10.1,
+      "net_value_per_store_year_gbp": 87577.0
+    },
+    "economics_priority": {
+      "alerts": 482.1,
+      "false_alerts": 35.0,
+      "value_at_risk_gbp": 42971.0,
+      "value_flagged_gbp": 40600.0,
+      "share_of_value_flagged": 0.9448,
+      "recovered_gbp": 12180.0,
+      "review_cost_gbp": 227.0,
+      "net_value_gbp": 11953.0,
+      "alerts_per_store_day": 9.6,
+      "net_value_per_store_year_gbp": 87015.0
+    },
+    "policy": {
+      "review": {
+        "Concealment in a bag": 0.9526,
+        "Concealment in clothing": 0.3755,
+        "Shelf sweep": 0.8811,
+        "Self checkout skip scan": 0.9612,
+        "Ticket switch": 0.9291,
+        "Sweethearting at the till": 0.8077,
+        "Trolley push out": 0.74
+      },
+      "priority": {
+        "Concealment in a bag": 0.9862,
+        "Concealment in clothing": 0.4606,
+        "Shelf sweep": 0.8857,
+        "Self checkout skip scan": 0.9743,
+        "Ticket switch": 0.9291,
+        "Sweethearting at the till": 0.8983,
+        "Trolley push out": 0.8762
+      },
+      "info": {
+        "deployment_theft_prevalence": 0.005,
+        "validation_precision": {
+          "Concealment in a bag": {
+            "review_precision": 0.9198138506240524,
+            "priority_precision": 1.0
+          },
+          "Concealment in clothing": {
+            "review_precision": 0.8854950391740001,
+            "priority_precision": 1.0
+          },
+          "Shelf sweep": {
+            "review_precision": 0.9130761761468624,
+            "priority_precision": 1.0
+          },
+          "Self checkout skip scan": {
+            "review_precision": 0.9115904462585478,
+            "priority_precision": 1.0
+          },
+          "Ticket switch": {
+            "review_precision": 1.0,
+            "priority_precision": 1.0
+          },
+          "Sweethearting at the till": {
+            "review_precision": 0.9065313941516319,
+            "priority_precision": 1.0
+          },
+          "Trolley push out": {
+            "review_precision": 0.8717753450960869,
+            "priority_precision": 1.0
+          }
+        },
+        "targets": {
+          "review": 0.8,
+          "priority": 0.95
+        },
+        "phantom_false_alerts": 1.0
+      }
+    },
+    "n_iter": 120
+  },
+  "rules": {
+    "classification": {
+      "per_class": {
+        "Normal shopping": {
+          "precision": 0.9609,
+          "recall": 0.9786,
+          "f1": 0.9697,
+          "support": 39773
+        },
+        "Concealment in a bag": {
+          "precision": 0.8168,
+          "recall": 0.6327,
+          "f1": 0.713,
+          "support": 1078
+        },
+        "Concealment in clothing": {
+          "precision": 0.6647,
+          "recall": 0.635,
+          "f1": 0.6495,
+          "support": 1074
+        },
+        "Shelf sweep": {
+          "precision": 1.0,
+          "recall": 0.7471,
+          "f1": 0.8552,
+          "support": 933
+        },
+        "Self checkout skip scan": {
+          "precision": 0.6757,
+          "recall": 0.7992,
+          "f1": 0.7323,
+          "support": 1001
+        },
+        "Ticket switch": {
+          "precision": 1.0,
+          "recall": 0.9891,
+          "f1": 0.9945,
+          "support": 735
+        },
+        "Sweethearting at the till": {
+          "precision": 1.0,
+          "recall": 0.7477,
+          "f1": 0.8556,
+          "support": 757
+        },
+        "Trolley push out": {
+          "precision": 0.893,
+          "recall": 0.764,
+          "f1": 0.8235,
+          "support": 1322
+        }
+      },
+      "confusion_matrix": [
+        [
+          38923,
+          85,
+          260,
+          0,
+          384,
+          0,
+          0,
+          121
+        ],
+        [
+          313,
+          682,
+          83,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          363,
+          29,
+          682,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          196,
+          39,
+          1,
+          697,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          201,
+          0,
+          0,
+          0,
+          800,
+          0,
+          0,
+          0
+        ],
+        [
+          8,
+          0,
+          0,
+          0,
+          0,
+          727,
+          0,
+          0
+        ],
+        [
+          191,
+          0,
+          0,
+          0,
+          0,
+          0,
+          566,
+          0
+        ],
+        [
+          312,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1010
+        ]
+      ],
+      "accuracy": 0.9446,
+      "macro_f1": 0.8242,
+      "theft_macro_f1": 0.8034
+    },
+    "alerts": {
+      "alerts_per_10k_clips": 251.2,
+      "precision": 0.1534,
+      "recall": 0.7704,
+      "false_alerts_per_10k_normal": 213.71,
+      "per_class": {
+        "Concealment in a bag": {
+          "recall": 0.7096,
+          "precision": 0.2036,
+          "support": 1078
+        },
+        "Concealment in clothing": {
+          "recall": 0.662,
+          "precision": 0.0786,
+          "support": 1074
+        },
+        "Shelf sweep": {
+          "recall": 0.7899,
+          "precision": 1.0,
+          "support": 933
+        },
+        "Self checkout skip scan": {
+          "recall": 0.7992,
+          "precision": 0.0569,
+          "support": 1001
+        },
+        "Ticket switch": {
+          "recall": 0.9891,
+          "precision": 1.0,
+          "support": 735
+        },
+        "Sweethearting at the till": {
+          "recall": 0.7477,
+          "precision": 1.0,
+          "support": 757
+        },
+        "Trolley push out": {
+          "recall": 0.764,
+          "precision": 0.1947,
+          "support": 1322
+        }
+      }
+    },
+    "economics": {
+      "alerts": 2511.7,
+      "false_alerts": 2126.4,
+      "value_at_risk_gbp": 42971.0,
+      "value_flagged_gbp": 33922.0,
+      "share_of_value_flagged": 0.7894,
+      "recovered_gbp": 10177.0,
+      "review_cost_gbp": 1768.0,
+      "net_value_gbp": 8409.0,
+      "alerts_per_store_day": 50.2,
+      "net_value_per_store_year_gbp": 61214.0
+    }
+  },
+  "logistic": {
+    "classification": {
+      "per_class": {
+        "Normal shopping": {
+          "precision": 0.9811,
+          "recall": 0.992,
+          "f1": 0.9865,
+          "support": 39773
+        },
+        "Concealment in a bag": {
+          "precision": 0.9337,
+          "recall": 0.7839,
+          "f1": 0.8522,
+          "support": 1078
+        },
+        "Concealment in clothing": {
+          "precision": 0.8837,
+          "recall": 0.8063,
+          "f1": 0.8432,
+          "support": 1074
+        },
+        "Shelf sweep": {
+          "precision": 0.9271,
+          "recall": 0.8992,
+          "f1": 0.9129,
+          "support": 933
+        },
+        "Self checkout skip scan": {
+          "precision": 0.9085,
+          "recall": 0.8032,
+          "f1": 0.8526,
+          "support": 1001
+        },
+        "Ticket switch": {
+          "precision": 1.0,
+          "recall": 0.9973,
+          "f1": 0.9986,
+          "support": 735
+        },
+        "Sweethearting at the till": {
+          "precision": 0.9775,
+          "recall": 0.9736,
+          "f1": 0.9755,
+          "support": 757
+        },
+        "Trolley push out": {
+          "precision": 0.9784,
+          "recall": 0.9592,
+          "f1": 0.9687,
+          "support": 1322
+        }
+      },
+      "confusion_matrix": [
+        [
+          39455,
+          55,
+          76,
+          61,
+          81,
+          0,
+          17,
+          28
+        ],
+        [
+          193,
+          845,
+          36,
+          4,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          203,
+          4,
+          866,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          91,
+          1,
+          2,
+          839,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          197,
+          0,
+          0,
+          0,
+          804,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          0,
+          0,
+          0,
+          733,
+          0,
+          0
+        ],
+        [
+          20,
+          0,
+          0,
+          0,
+          0,
+          0,
+          737,
+          0
+        ],
+        [
+          54,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1268
+        ]
+      ],
+      "accuracy": 0.9759,
+      "macro_f1": 0.9238,
+      "theft_macro_f1": 0.9148
+    },
+    "ranking": {
+      "theft_roc_auc": 0.9921,
+      "theft_ap_enriched": 0.9715,
+      "theft_ap_deployment": 0.8043,
+      "per_class_ap_deployment": {
+        "Concealment in a bag": 0.5949,
+        "Concealment in clothing": 0.3112,
+        "Shelf sweep": 0.8461,
+        "Self checkout skip scan": 0.7369,
+        "Ticket switch": 0.9995,
+        "Sweethearting at the till": 0.9657,
+        "Trolley push out": 0.9603
+      }
+    }
+  },
+  "matched_alert_budget": {
+    "model": {
+      "alerts_per_10k_clips": 50.5,
+      "precision": 0.9108,
+      "recall": 0.9191,
+      "false_alerts_per_10k_normal": 4.53,
+      "per_class": {
+        "Concealment in a bag": {
+          "recall": 0.8581,
+          "precision": 0.8994,
+          "support": 1078
+        },
+        "Concealment in clothing": {
+          "recall": 0.9469,
+          "precision": 0.9671,
+          "support": 1074
+        },
+        "Shelf sweep": {
+          "recall": 0.9335,
+          "precision": 1.0,
+          "support": 933
+        },
+        "Self checkout skip scan": {
+          "recall": 0.8042,
+          "precision": 0.6795,
+          "support": 1001
+        },
+        "Ticket switch": {
+          "recall": 1.0,
+          "precision": 1.0,
+          "support": 735
+        },
+        "Sweethearting at the till": {
+          "recall": 0.9657,
+          "precision": 0.9549,
+          "support": 757
+        },
+        "Trolley push out": {
+          "recall": 0.9516,
+          "precision": 0.948,
+          "support": 1322
+        }
+      }
+    },
+    "logistic": {
+      "alerts_per_10k_clips": 50.5,
+      "precision": 0.7225,
+      "recall": 0.7294,
+      "false_alerts_per_10k_normal": 14.08,
+      "per_class": {
+        "Concealment in a bag": {
+          "recall": 0.4796,
+          "precision": 0.6518,
+          "support": 1078
+        },
+        "Concealment in clothing": {
+          "recall": 0.4553,
+          "precision": 0.3436,
+          "support": 1074
+        },
+        "Shelf sweep": {
+          "recall": 0.8232,
+          "precision": 0.6499,
+          "support": 933
+        },
+        "Self checkout skip scan": {
+          "recall": 0.6783,
+          "precision": 0.7662,
+          "support": 1001
+        },
+        "Ticket switch": {
+          "recall": 0.9918,
+          "precision": 1.0,
+          "support": 735
+        },
+        "Sweethearting at the till": {
+          "recall": 0.9207,
+          "precision": 0.8706,
+          "support": 757
+        },
+        "Trolley push out": {
+          "recall": 0.8729,
+          "precision": 1.0,
+          "support": 1322
+        }
+      }
+    }
+  },
+  "top_features": [
+    {
+      "feature": "near_waist_frac",
+      "importance": 0.2211
+    },
+    {
+      "feature": "scene_self_checkout",
+      "importance": 0.1023
+    },
+    {
+      "feature": "scene_exit",
+      "importance": 0.0925
+    },
+    {
+      "feature": "face_visible_frac",
+      "importance": 0.09
+    },
+    {
+      "feature": "item_frames_frac",
+      "importance": 0.0651
+    },
+    {
+      "feature": "min_pick_interval_s",
+      "importance": 0.0623
+    },
+    {
+      "feature": "unscanned_bagging",
+      "importance": 0.0437
+    },
+    {
+      "feature": "flow_gap",
+      "importance": 0.0434
+    },
+    {
+      "feature": "container_start",
+      "importance": 0.041
+    },
+    {
+      "feature": "unaccounted_items",
+      "importance": 0.0366
+    },
+    {
+      "feature": "scan_match_min",
+      "importance": 0.0325
+    },
+    {
+      "feature": "hands_together_frac",
+      "importance": 0.0317
+    }
+  ],
+  "sensor_ablation": [
+    {
+      "features": "Pose only",
+      "n_features": 22,
+      "macro_f1": 0.5837,
+      "theft_ap_deployment": 0.5101,
+      "recall_Concealment in a bag": 0.6558,
+      "recall_Concealment in clothing": 0.8352,
+      "recall_Shelf sweep": 0.746,
+      "recall_Self checkout skip scan": 0.2418,
+      "recall_Ticket switch": 0.0014,
+      "recall_Sweethearting at the till": 0.004,
+      "recall_Trolley push out": 0.7867
+    },
+    {
+      "features": "Pose + item flow",
+      "n_features": 46,
+      "macro_f1": 0.7558,
+      "theft_ap_deployment": 0.7336,
+      "recall_Concealment in a bag": 0.9045,
+      "recall_Concealment in clothing": 0.9646,
+      "recall_Shelf sweep": 0.9518,
+      "recall_Self checkout skip scan": 0.7752,
+      "recall_Ticket switch": 0.0068,
+      "recall_Sweethearting at the till": 0.3012,
+      "recall_Trolley push out": 0.8608
+    },
+    {
+      "features": "Pose + item flow + POS",
+      "n_features": 62,
+      "macro_f1": 0.9655,
+      "theft_ap_deployment": 0.9525,
+      "recall_Concealment in a bag": 0.9147,
+      "recall_Concealment in clothing": 0.9646,
+      "recall_Shelf sweep": 0.9518,
+      "recall_Self checkout skip scan": 0.8402,
+      "recall_Ticket switch": 0.9973,
+      "recall_Sweethearting at the till": 0.9723,
+      "recall_Trolley push out": 0.9644
+    }
+  ],
+  "streaming": {
+    "streaming_aware_model": {
+      "clips": 4000,
+      "honest_clips": 3431,
+      "whole_clip_false_alerts_per_1000": 0.29,
+      "streaming_false_alerts_per_1000": 4.66,
+      "streaming_false_alerts_unconfirmed_per_1000": 8.45,
+      "whole_clip_theft_recall": 0.9016,
+      "streaming_theft_recall": 0.9315,
+      "confirm_evaluations": 2
+    },
+    "whole_clip_only_model": {
+      "clips": 4000,
+      "honest_clips": 3431,
+      "whole_clip_false_alerts_per_1000": 0.29,
+      "streaming_false_alerts_per_1000": 17.49,
+      "streaming_false_alerts_unconfirmed_per_1000": 42.55,
+      "whole_clip_theft_recall": 0.8875,
+      "streaming_theft_recall": 0.9262,
+      "confirm_evaluations": 2,
+      "macro_f1": 0.9706
+    }
+  },
+  "detection_latency": [
+    {
+      "scenario": "Concealment in a bag",
+      "clips": 150,
+      "detected_in_clip": 0.833,
+      "median_latency_s": 1.095,
+      "p90_latency_s": 3.888
+    },
+    {
+      "scenario": "Concealment in clothing",
+      "clips": 150,
+      "detected_in_clip": 0.993,
+      "median_latency_s": 0.895,
+      "p90_latency_s": 1.409
+    },
+    {
+      "scenario": "Shelf sweep",
+      "clips": 150,
+      "detected_in_clip": 0.907,
+      "median_latency_s": 0.797,
+      "p90_latency_s": 1.734
+    },
+    {
+      "scenario": "Self checkout skip scan",
+      "clips": 150,
+      "detected_in_clip": 0.833,
+      "median_latency_s": 1.447,
+      "p90_latency_s": 4.685
+    },
+    {
+      "scenario": "Ticket switch",
+      "clips": 150,
+      "detected_in_clip": 1.0,
+      "median_latency_s": -0.137,
+      "p90_latency_s": 0.337
+    },
+    {
+      "scenario": "Sweethearting at the till",
+      "clips": 150,
+      "detected_in_clip": 0.973,
+      "median_latency_s": 0.028,
+      "p90_latency_s": 1.042
+    },
+    {
+      "scenario": "Trolley push out",
+      "clips": 150,
+      "detected_in_clip": 1.0,
+      "median_latency_s": -6.081,
+      "p90_latency_s": -2.583
+    }
+  ],
+  "runtime_seconds": 249.4
+}

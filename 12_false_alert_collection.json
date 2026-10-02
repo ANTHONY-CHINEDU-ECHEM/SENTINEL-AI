@@ -1,0 +1,110 @@
+{
+  "brief": {
+    "headline": "Review alert: possible trolley push out on the store exit camera.",
+    "observed": [
+      "At 7.4 s: Reached the doors with no linked payment.",
+      "Hands together was 0.95; the typical value for normal clips on this camera is 0 (range 0 to 0.97).",
+      "Share of clip holding an item was 0.95; the typical value for normal clips on this camera is 0 (range 0 to 0.03)."
+    ],
+    "benign_explanations": [
+      "Payment was made but the sale did not link to the track.",
+      "The goods are a click and collect or prepaid order.",
+      "A colleague is moving stock or trolleys outside."
+    ],
+    "recommended_action": "Ask the door colleague to offer a receipt check with a greeting. Check for a recent sale at the tills.",
+    "confidence_note": "Model risk is 0.81, which is moderate evidence for this scenario. Pose tracking was clear throughout the clip.",
+    "provider": "template",
+    "fallback_reason": null
+  },
+  "evidence": {
+    "clip_id": "S811C00014",
+    "camera": "Store exit",
+    "duration_s": 12.8,
+    "assessment": {
+      "tier": "review",
+      "scenario": "Trolley push out",
+      "scenario_id": 7,
+      "risk": 0.808,
+      "probability_normal": 0.192
+    },
+    "drivers": [
+      {
+        "feature": "hands_together_frac",
+        "label": "Hands together",
+        "meaning": "Share of the clip with both wrists close together",
+        "value": 0.95,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 0.97,
+        "differs_from_typical": true,
+        "evidence_weight": 7.71
+      },
+      {
+        "feature": "item_frames_frac",
+        "label": "Share of clip holding an item",
+        "meaning": "Share of the clip with merchandise seen in a hand",
+        "value": 0.95,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 0.03,
+        "differs_from_typical": true,
+        "evidence_weight": 6.37
+      },
+      {
+        "feature": "txn_linked",
+        "label": "Paid transaction linked",
+        "meaning": "One when a completed sale is linked to this person",
+        "value": 0.0,
+        "typical": 1.0,
+        "typical_low": 0.0,
+        "typical_high": 1.0,
+        "differs_from_typical": true,
+        "evidence_weight": 4.16
+      },
+      {
+        "feature": "speed_max",
+        "label": "Peak walking speed",
+        "meaning": "Fastest sustained movement in the clip, in body heights per second",
+        "value": 0.38,
+        "typical": 0.34,
+        "typical_low": 0.26,
+        "typical_high": 0.44,
+        "differs_from_typical": false,
+        "evidence_weight": 2.93
+      },
+      {
+        "feature": "checkout_dwell_s",
+        "label": "Seconds spent at checkout",
+        "meaning": "Seconds the multi camera tracker saw this person in a checkout zone",
+        "value": 5.21,
+        "typical": 69.26,
+        "typical_low": 1.11,
+        "typical_high": 199.09,
+        "differs_from_typical": true,
+        "evidence_weight": 2.43
+      },
+      {
+        "feature": "still_frac",
+        "label": "Time standing still",
+        "meaning": "Share of the clip with almost no movement",
+        "value": 0.53,
+        "typical": 0.41,
+        "typical_low": 0.29,
+        "typical_high": 0.53,
+        "differs_from_typical": true,
+        "evidence_weight": 1.38
+      }
+    ],
+    "timeline": [
+      {
+        "t": 7.4,
+        "kind": "exit_crossing",
+        "text": "Reached the doors with no linked payment"
+      }
+    ],
+    "data_quality": {
+      "pose_confidence": 0.84,
+      "arm_hidden_share": 0.02
+    }
+  }
+}

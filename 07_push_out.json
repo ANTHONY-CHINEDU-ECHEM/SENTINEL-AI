@@ -1,0 +1,116 @@
+{
+  "brief": {
+    "headline": "Priority alert: possible trolley push out on the store exit camera.",
+    "observed": [
+      "At 8.4 s: Reached the doors with no linked payment.",
+      "At 8.8 s: Security tag alarm sounded at the doors.",
+      "Hands together was 1; the typical value for normal clips on this camera is 0 (range 0 to 0.97).",
+      "Seconds spent at checkout was 4.67; the typical value for normal clips on this camera is 69.26 (range 1.11 to 199.09)."
+    ],
+    "benign_explanations": [
+      "Payment was made but the sale did not link to the track.",
+      "The goods are a click and collect or prepaid order.",
+      "A colleague is moving stock or trolleys outside."
+    ],
+    "recommended_action": "Alert door security now for a receipt check. Do not block the exit. Preserve footage and note any vehicle.",
+    "confidence_note": "Model risk is 1.00, which is strong evidence for this scenario. Pose tracking was clear throughout the clip.",
+    "provider": "template",
+    "fallback_reason": null
+  },
+  "evidence": {
+    "clip_id": "S806C00022",
+    "camera": "Store exit",
+    "duration_s": 12.8,
+    "assessment": {
+      "tier": "priority",
+      "scenario": "Trolley push out",
+      "scenario_id": 7,
+      "risk": 1.0,
+      "probability_normal": 0.0
+    },
+    "drivers": [
+      {
+        "feature": "hands_together_frac",
+        "label": "Hands together",
+        "meaning": "Share of the clip with both wrists close together",
+        "value": 1.0,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 0.97,
+        "differs_from_typical": true,
+        "evidence_weight": 10.59
+      },
+      {
+        "feature": "checkout_dwell_s",
+        "label": "Seconds spent at checkout",
+        "meaning": "Seconds the multi camera tracker saw this person in a checkout zone",
+        "value": 4.67,
+        "typical": 69.26,
+        "typical_low": 1.11,
+        "typical_high": 199.09,
+        "differs_from_typical": true,
+        "evidence_weight": 10.38
+      },
+      {
+        "feature": "speed_max",
+        "label": "Peak walking speed",
+        "meaning": "Fastest sustained movement in the clip, in body heights per second",
+        "value": 0.48,
+        "typical": 0.34,
+        "typical_low": 0.26,
+        "typical_high": 0.44,
+        "differs_from_typical": true,
+        "evidence_weight": 3.93
+      },
+      {
+        "feature": "txn_linked",
+        "label": "Paid transaction linked",
+        "meaning": "One when a completed sale is linked to this person",
+        "value": 0.0,
+        "typical": 1.0,
+        "typical_low": 0.0,
+        "typical_high": 1.0,
+        "differs_from_typical": true,
+        "evidence_weight": 3.83
+      },
+      {
+        "feature": "container_start",
+        "label": "Basket count at start",
+        "meaning": "Visible items in the basket, trolley or belt when the clip begins",
+        "value": 5.0,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 7.0,
+        "differs_from_typical": true,
+        "evidence_weight": 3.13
+      },
+      {
+        "feature": "eas_any",
+        "label": "Security tag alarm",
+        "meaning": "One when the exit gate alarm sounded",
+        "value": 1.0,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 0.0,
+        "differs_from_typical": true,
+        "evidence_weight": 2.72
+      }
+    ],
+    "timeline": [
+      {
+        "t": 8.4,
+        "kind": "exit_crossing",
+        "text": "Reached the doors with no linked payment"
+      },
+      {
+        "t": 8.8,
+        "kind": "tag_alarm",
+        "text": "Security tag alarm sounded at the doors"
+      }
+    ],
+    "data_quality": {
+      "pose_confidence": 0.84,
+      "arm_hidden_share": 0.0
+    }
+  }
+}

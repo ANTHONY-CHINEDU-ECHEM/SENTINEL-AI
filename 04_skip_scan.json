@@ -1,0 +1,137 @@
+{
+  "brief": {
+    "headline": "Priority alert: possible self checkout skip scan on the self checkout camera.",
+    "observed": [
+      "At 5.0 s: Bagging count rose to 2 with no scan in the two seconds before.",
+      "At 7.4 s: Bagging count rose to 3 with no scan in the two seconds before.",
+      "At 11.0 s: Bagging count rose to 5 with no scan in the two seconds before.",
+      "Bagged but not scanned was 2; the typical value for normal clips on this camera is -1 (range -1 to 0).",
+      "Left the basket but not scanned was 3; the typical value for normal clips on this camera is 0 (range 0 to 1)."
+    ],
+    "benign_explanations": [
+      "The shopper placed their own bag on the bagging area.",
+      "One scan covered several identical items using the quantity key.",
+      "A barcode failed to read and the shopper has not yet noticed."
+    ],
+    "recommended_action": "Ask the host to pause the session and help the shopper rescan. Treat it as an honest mistake unless the review shows otherwise.",
+    "confidence_note": "Model risk is 1.00, which is strong evidence for this scenario. Pose tracking was clear throughout the clip.",
+    "provider": "template",
+    "fallback_reason": null
+  },
+  "evidence": {
+    "clip_id": "S803C00025",
+    "camera": "Self checkout",
+    "duration_s": 12.8,
+    "assessment": {
+      "tier": "priority",
+      "scenario": "Self checkout skip scan",
+      "scenario_id": 4,
+      "risk": 1.0,
+      "probability_normal": 0.0
+    },
+    "drivers": [
+      {
+        "feature": "unscanned_bagging",
+        "label": "Bagged but not scanned",
+        "meaning": "Bagging area gain minus quantity scanned",
+        "value": 2.0,
+        "typical": -1.0,
+        "typical_low": -1.0,
+        "typical_high": 0.0,
+        "differs_from_typical": true,
+        "evidence_weight": 7.63
+      },
+      {
+        "feature": "flow_gap",
+        "label": "Left the basket but not scanned",
+        "meaning": "Items that left the input side minus quantity scanned",
+        "value": 3.0,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 1.0,
+        "differs_from_typical": true,
+        "evidence_weight": 7.0
+      },
+      {
+        "feature": "pos_total",
+        "label": "Quantity scanned",
+        "meaning": "Net quantity registered by the point of sale",
+        "value": 3.0,
+        "typical": 5.0,
+        "typical_low": 3.0,
+        "typical_high": 7.0,
+        "differs_from_typical": true,
+        "evidence_weight": 2.85
+      },
+      {
+        "feature": "scans_per_transfer",
+        "label": "Scans per transfer",
+        "meaning": "Scan events divided by items carried to bagging",
+        "value": 0.6,
+        "typical": 1.2,
+        "typical_low": 0.8,
+        "typical_high": 2.0,
+        "differs_from_typical": true,
+        "evidence_weight": 0.72
+      },
+      {
+        "feature": "item_onsets",
+        "label": "Times an item appeared in hand",
+        "meaning": "Count of item in hand episodes",
+        "value": 13.0,
+        "typical": 10.0,
+        "typical_low": 8.0,
+        "typical_high": 13.0,
+        "differs_from_typical": true,
+        "evidence_weight": 0.34
+      },
+      {
+        "feature": "transfers",
+        "label": "Items carried to bagging",
+        "meaning": "Item in hand episodes that ended at the bagging area",
+        "value": 5.0,
+        "typical": 4.0,
+        "typical_low": 2.0,
+        "typical_high": 6.0,
+        "differs_from_typical": false,
+        "evidence_weight": 0.26
+      }
+    ],
+    "timeline": [
+      {
+        "t": 2.0,
+        "kind": "scan",
+        "text": "Scan registered (product match 0.78)"
+      },
+      {
+        "t": 5.0,
+        "kind": "unscanned_bagging",
+        "text": "Bagging count rose to 2 with no scan in the two seconds before"
+      },
+      {
+        "t": 7.4,
+        "kind": "unscanned_bagging",
+        "text": "Bagging count rose to 3 with no scan in the two seconds before"
+      },
+      {
+        "t": 8.2,
+        "kind": "scan",
+        "text": "Scan registered (product match 0.93)"
+      },
+      {
+        "t": 11.0,
+        "kind": "unscanned_bagging",
+        "text": "Bagging count rose to 5 with no scan in the two seconds before"
+      },
+      {
+        "t": 11.8,
+        "kind": "scan",
+        "text": "Scan registered (product match 0.90)"
+      }
+    ],
+    "data_quality": {
+      "pose_confidence": 0.84,
+      "arm_hidden_share": 0.02
+    }
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "brief": {
+    "headline": "Priority alert: possible concealment in a bag on the aisle camera.",
+    "observed": [
+      "At 5.2 s: An item was taken from the shelf.",
+      "At 6.0 s: Item in the right hand was last seen at a personal bag; no basket, shelf or scan event explains it.",
+      "At 10.8 s: Item in the right hand was last seen at a personal bag; no basket, shelf or scan event explains it.",
+      "Unexplained disappearances was 2; the typical value for normal clips on this camera is 0 (range 0 to 2).",
+      "Fastest gap between picks was 3.8; the typical value for normal clips on this camera is 12.8 (range 1 to 12.8)."
+    ],
+    "benign_explanations": [
+      "The shopper is using scan and go and the handset scan was not recorded.",
+      "The object was a personal item such as a phone, list or purse.",
+      "The bag is the shopper's own shopping bag and they intend to pay at the till."
+    ],
+    "recommended_action": "Send a colleague to offer a basket and assistance now. Check whether the item is presented at checkout before any further step.",
+    "confidence_note": "Model risk is 1.00, which is strong evidence for this scenario. Pose tracking was clear throughout the clip.",
+    "provider": "template",
+    "fallback_reason": null
+  },
+  "evidence": {
+    "clip_id": "S800C00025",
+    "camera": "Aisle",
+    "duration_s": 12.8,
+    "assessment": {
+      "tier": "priority",
+      "scenario": "Concealment in a bag",
+      "scenario_id": 1,
+      "risk": 1.0,
+      "probability_normal": 0.0
+    },
+    "drivers": [
+      {
+        "feature": "vanish_unexplained",
+        "label": "Unexplained disappearances",
+        "meaning": "Items that left the hand with no basket, shelf, bagging or scan event to explain it",
+        "value": 2.0,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 2.0,
+        "differs_from_typical": true,
+        "evidence_weight": 3.15
+      },
+      {
+        "feature": "face_visible_frac",
+        "label": "Face towards camera",
+        "meaning": "Share of frames where the face keypoints are confidently seen",
+        "value": 0.03,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 0.0,
+        "differs_from_typical": false,
+        "evidence_weight": 1.31
+      },
+      {
+        "feature": "min_pick_interval_s",
+        "label": "Fastest gap between picks",
+        "meaning": "Shortest time between two removals, in seconds",
+        "value": 3.8,
+        "typical": 12.8,
+        "typical_low": 1.0,
+        "typical_high": 12.8,
+        "differs_from_typical": true,
+        "evidence_weight": 1.1
+      },
+      {
+        "feature": "vanish_unexplained_near_bag",
+        "label": "Unexplained release at bag",
+        "meaning": "Item vanished at a personal bag with nothing to explain it",
+        "value": 2.0,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 0.0,
+        "differs_from_typical": true,
+        "evidence_weight": 0.78
+      },
+      {
+        "feature": "shelf_picks",
+        "label": "Items taken from shelf",
+        "meaning": "Shelf sensor removal events",
+        "value": 2.0,
+        "typical": 1.0,
+        "typical_low": 0.0,
+        "typical_high": 4.0,
+        "differs_from_typical": false,
+        "evidence_weight": 0.77
+      },
+      {
+        "feature": "speed_mean",
+        "label": "Average walking speed",
+        "meaning": "Body heights per second, averaged over the clip",
+        "value": 0.01,
+        "typical": 0.04,
+        "typical_low": 0.01,
+        "typical_high": 0.08,
+        "differs_from_typical": false,
+        "evidence_weight": 0.76
+      }
+    ],
+    "timeline": [
+      {
+        "t": 5.0,
+        "kind": "head_turn",
+        "text": "Head turned to the side"
+      },
+      {
+        "t": 5.2,
+        "kind": "item_taken",
+        "text": "An item was taken from the shelf"
+      },
+      {
+        "t": 5.8,
+        "kind": "head_turn",
+        "text": "Head turned to the side"
+      },
+      {
+        "t": 6.0,
+        "kind": "item_vanished",
+        "text": "Item in the right hand was last seen at a personal bag; no basket, shelf or scan event explains it"
+      },
+      {
+        "t": 9.0,
+        "kind": "item_taken",
+        "text": "An item was taken from the shelf"
+      },
+      {
+        "t": 10.8,
+        "kind": "item_vanished",
+        "text": "Item in the right hand was last seen at a personal bag; no basket, shelf or scan event explains it"
+      }
+    ],
+    "data_quality": {
+      "pose_confidence": 0.84,
+      "arm_hidden_share": 0.03
+    }
+  }
+}

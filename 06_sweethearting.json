@@ -1,0 +1,146 @@
+{
+  "brief": {
+    "headline": "Priority alert: possible sweethearting at the till on the staffed till camera.",
+    "observed": [
+      "At 5.6 s: Bagging count rose to 3 with no scan in the two seconds before.",
+      "At 7.0 s: Bagging count rose to 4 with no scan in the two seconds before.",
+      "Bagged but not scanned was 1; the typical value for normal clips on this camera is -1 (range -3 to 0).",
+      "Left the basket but not scanned was 2; the typical value for normal clips on this camera is 0 (range -2 to 1)."
+    ],
+    "benign_explanations": [
+      "Bulky items were scanned in the trolley with a handset.",
+      "The quantity key was used for identical items.",
+      "The item counter miscounted items that were stacked."
+    ],
+    "recommended_action": "Refer to the store manager and people team with the clip, the receipt and the till log. Follow the internal investigation procedure.",
+    "confidence_note": "Model risk is 1.00, which is strong evidence for this scenario. Pose tracking was clear throughout the clip.",
+    "provider": "template",
+    "fallback_reason": null
+  },
+  "evidence": {
+    "clip_id": "S805C00004",
+    "camera": "Staffed till",
+    "duration_s": 12.8,
+    "assessment": {
+      "tier": "priority",
+      "scenario": "Sweethearting at the till",
+      "scenario_id": 6,
+      "risk": 1.0,
+      "probability_normal": 0.0
+    },
+    "drivers": [
+      {
+        "feature": "unscanned_bagging",
+        "label": "Bagged but not scanned",
+        "meaning": "Bagging area gain minus quantity scanned",
+        "value": 1.0,
+        "typical": -1.0,
+        "typical_low": -3.0,
+        "typical_high": 0.0,
+        "differs_from_typical": true,
+        "evidence_weight": 13.93
+      },
+      {
+        "feature": "flow_gap",
+        "label": "Left the basket but not scanned",
+        "meaning": "Items that left the input side minus quantity scanned",
+        "value": 2.0,
+        "typical": 0.0,
+        "typical_low": -2.0,
+        "typical_high": 1.0,
+        "differs_from_typical": true,
+        "evidence_weight": 7.28
+      },
+      {
+        "feature": "pos_total",
+        "label": "Quantity scanned",
+        "meaning": "Net quantity registered by the point of sale",
+        "value": 6.0,
+        "typical": 8.0,
+        "typical_low": 7.0,
+        "typical_high": 10.0,
+        "differs_from_typical": true,
+        "evidence_weight": 4.11
+      },
+      {
+        "feature": "scans_per_transfer",
+        "label": "Scans per transfer",
+        "meaning": "Scan events divided by items carried to bagging",
+        "value": 0.86,
+        "typical": 1.14,
+        "typical_low": 0.83,
+        "typical_high": 1.8,
+        "differs_from_typical": true,
+        "evidence_weight": 1.13
+      },
+      {
+        "feature": "width_range",
+        "label": "Turning",
+        "meaning": "Change in apparent shoulder width, a sign of turning away from the camera",
+        "value": 0.02,
+        "typical": 0.03,
+        "typical_low": 0.02,
+        "typical_high": 0.07,
+        "differs_from_typical": false,
+        "evidence_weight": 0.27
+      },
+      {
+        "feature": "item_frames_frac",
+        "label": "Share of clip holding an item",
+        "meaning": "Share of the clip with merchandise seen in a hand",
+        "value": 0.91,
+        "typical": 0.81,
+        "typical_low": 0.61,
+        "typical_high": 0.91,
+        "differs_from_typical": true,
+        "evidence_weight": 0.17
+      }
+    ],
+    "timeline": [
+      {
+        "t": 1.4,
+        "kind": "scan",
+        "text": "Scan registered (product match 0.84)"
+      },
+      {
+        "t": 3.0,
+        "kind": "scan",
+        "text": "Scan registered (product match 0.84)"
+      },
+      {
+        "t": 5.6,
+        "kind": "unscanned_bagging",
+        "text": "Bagging count rose to 3 with no scan in the two seconds before"
+      },
+      {
+        "t": 7.0,
+        "kind": "unscanned_bagging",
+        "text": "Bagging count rose to 4 with no scan in the two seconds before"
+      },
+      {
+        "t": 7.8,
+        "kind": "scan",
+        "text": "Scan registered (product match 0.74)"
+      },
+      {
+        "t": 9.0,
+        "kind": "scan",
+        "text": "Scan registered (product match 1.00)"
+      },
+      {
+        "t": 10.6,
+        "kind": "scan",
+        "text": "Scan registered (product match 0.86)"
+      },
+      {
+        "t": 12.2,
+        "kind": "scan",
+        "text": "Scan registered (product match 0.91)"
+      }
+    ],
+    "data_quality": {
+      "pose_confidence": 0.83,
+      "arm_hidden_share": 0.02
+    }
+  }
+}

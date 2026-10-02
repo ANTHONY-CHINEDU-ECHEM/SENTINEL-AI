@@ -1,0 +1,137 @@
+{
+  "brief": {
+    "headline": "Priority alert: possible ticket switch on the self checkout camera.",
+    "observed": [
+      "At 0.6 s: Bagging count rose to 1 with no scan in the two seconds before.",
+      "At 3.8 s: Scan registered, but the product match was 0.42 and the price was 0.31 of the expected price.",
+      "At 5.8 s: Scan registered, but the product match was 0.13 and the price was 0.18 of the expected price.",
+      "Weakest product match was 0.13; the typical value for normal clips on this camera is 0.78 (range 0.45 to 0.87).",
+      "Lowest price ratio was 0.18; the typical value for normal clips on this camera is 0.96 (range 0.43 to 1)."
+    ],
+    "benign_explanations": [
+      "The product recogniser is wrong about a new or seasonal pack.",
+      "The item carries a genuine reduced to clear label.",
+      "Loose produce was looked up under a similar product."
+    ],
+    "recommended_action": "Ask the host to verify the line before payment and keep the label for the duty manager.",
+    "confidence_note": "Model risk is 1.00, which is strong evidence for this scenario. Pose tracking was clear throughout the clip.",
+    "provider": "template",
+    "fallback_reason": null
+  },
+  "evidence": {
+    "clip_id": "S804C00015",
+    "camera": "Self checkout",
+    "duration_s": 12.8,
+    "assessment": {
+      "tier": "priority",
+      "scenario": "Ticket switch",
+      "scenario_id": 5,
+      "risk": 1.0,
+      "probability_normal": 0.0
+    },
+    "drivers": [
+      {
+        "feature": "scan_match_min",
+        "label": "Weakest product match",
+        "meaning": "Lowest similarity between the product seen and the barcode scanned",
+        "value": 0.13,
+        "typical": 0.78,
+        "typical_low": 0.45,
+        "typical_high": 0.87,
+        "differs_from_typical": true,
+        "evidence_weight": 12.28
+      },
+      {
+        "feature": "price_ratio_min",
+        "label": "Lowest price ratio",
+        "meaning": "Scanned price divided by the price expected for the product seen",
+        "value": 0.18,
+        "typical": 0.96,
+        "typical_low": 0.43,
+        "typical_high": 1.0,
+        "differs_from_typical": true,
+        "evidence_weight": 10.57
+      },
+      {
+        "feature": "suspect_scans",
+        "label": "Mismatched cheap scans",
+        "meaning": "Scans where the product match was weak and the price was far below expectation",
+        "value": 2.0,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 0.0,
+        "differs_from_typical": true,
+        "evidence_weight": 5.49
+      },
+      {
+        "feature": "near_bag_frac",
+        "label": "Hand at personal bag",
+        "meaning": "Largest share of the clip either hand spent at a personal bag",
+        "value": 0.61,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 0.58,
+        "differs_from_typical": true,
+        "evidence_weight": 0.64
+      },
+      {
+        "feature": "low_price_scans",
+        "label": "Cheap scans",
+        "meaning": "Scans priced under sixty percent of expectation",
+        "value": 2.0,
+        "typical": 0.0,
+        "typical_low": 0.0,
+        "typical_high": 1.0,
+        "differs_from_typical": true,
+        "evidence_weight": 0.47
+      },
+      {
+        "feature": "width_mean",
+        "label": "Average torso width",
+        "meaning": "Apparent shoulder width; low values mean side on to the camera",
+        "value": 0.2,
+        "typical": 0.21,
+        "typical_low": 0.2,
+        "typical_high": 0.22,
+        "differs_from_typical": false,
+        "evidence_weight": 0.26
+      }
+    ],
+    "timeline": [
+      {
+        "t": 0.6,
+        "kind": "unscanned_bagging",
+        "text": "Bagging count rose to 1 with no scan in the two seconds before"
+      },
+      {
+        "t": 1.8,
+        "kind": "scan",
+        "text": "Scan registered (product match 0.84)"
+      },
+      {
+        "t": 3.8,
+        "kind": "suspect_scan",
+        "text": "Scan registered, but the product match was 0.42 and the price was 0.31 of the expected price"
+      },
+      {
+        "t": 5.8,
+        "kind": "suspect_scan",
+        "text": "Scan registered, but the product match was 0.13 and the price was 0.18 of the expected price"
+      },
+      {
+        "t": 7.6,
+        "kind": "scan",
+        "text": "Scan registered (product match 0.92)"
+      },
+      {
+        "t": 10.0,
+        "kind": "scan",
+        "text": "Scan registered (product match 0.90)"
+      }
+    ],
+    "data_quality": {
+      "pose_confidence": 0.83,
+      "arm_hidden_share": 0.02
+    }
+  }
+}

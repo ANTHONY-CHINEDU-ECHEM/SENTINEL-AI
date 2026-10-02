@@ -1,0 +1,134 @@
+[
+  {
+    "slug": "01_concealment_bag",
+    "subtype": "concealment_bag",
+    "kind": "alert",
+    "truth": "Concealment in a bag",
+    "tier": "priority",
+    "flagged": "Concealment in a bag",
+    "risk": 1.0,
+    "headline": "Priority alert: possible concealment in a bag on the aisle camera.",
+    "narrator": "template"
+  },
+  {
+    "slug": "02_concealment_clothing",
+    "subtype": "concealment_clothing",
+    "kind": "alert",
+    "truth": "Concealment in clothing",
+    "tier": "priority",
+    "flagged": "Concealment in clothing",
+    "risk": 1.0,
+    "headline": "Priority alert: possible concealment in clothing on the aisle camera.",
+    "narrator": "template"
+  },
+  {
+    "slug": "03_shelf_sweep",
+    "subtype": "shelf_sweep",
+    "kind": "alert",
+    "truth": "Shelf sweep",
+    "tier": "priority",
+    "flagged": "Shelf sweep",
+    "risk": 1.0,
+    "headline": "Priority alert: possible shelf sweep on the aisle camera.",
+    "narrator": "template"
+  },
+  {
+    "slug": "04_skip_scan",
+    "subtype": "skip_scan",
+    "kind": "alert",
+    "truth": "Self checkout skip scan",
+    "tier": "priority",
+    "flagged": "Self checkout skip scan",
+    "risk": 1.0,
+    "headline": "Priority alert: possible self checkout skip scan on the self checkout camera.",
+    "narrator": "template"
+  },
+  {
+    "slug": "05_ticket_switch",
+    "subtype": "ticket_switch",
+    "kind": "alert",
+    "truth": "Ticket switch",
+    "tier": "priority",
+    "flagged": "Ticket switch",
+    "risk": 1.0,
+    "headline": "Priority alert: possible ticket switch on the self checkout camera.",
+    "narrator": "template"
+  },
+  {
+    "slug": "06_sweethearting",
+    "subtype": "sweethearting",
+    "kind": "alert",
+    "truth": "Sweethearting at the till",
+    "tier": "priority",
+    "flagged": "Sweethearting at the till",
+    "risk": 1.0,
+    "headline": "Priority alert: possible sweethearting at the till on the staffed till camera.",
+    "narrator": "template"
+  },
+  {
+    "slug": "07_push_out",
+    "subtype": "push_out",
+    "kind": "alert",
+    "truth": "Trolley push out",
+    "tier": "priority",
+    "flagged": "Trolley push out",
+    "risk": 1.0,
+    "headline": "Priority alert: possible trolley push out on the store exit camera.",
+    "narrator": "template"
+  },
+  {
+    "slug": "08_benign_scan_and_go",
+    "subtype": "scan_and_go",
+    "kind": "clear",
+    "truth": "Normal shopping",
+    "tier": "clear",
+    "flagged": "Concealment in a bag",
+    "risk": 0.0,
+    "headline": "No alert: behaviour on the aisle camera is consistent with normal shopping.",
+    "narrator": "template"
+  },
+  {
+    "slug": "09_benign_carry_in_hand",
+    "subtype": "carry_in_hand",
+    "kind": "clear",
+    "truth": "Normal shopping",
+    "tier": "clear",
+    "flagged": "Concealment in a bag",
+    "risk": 0.0,
+    "headline": "No alert: behaviour on the aisle camera is consistent with normal shopping.",
+    "narrator": "template"
+  },
+  {
+    "slug": "10_benign_own_bag",
+    "subtype": "sco_own_bag",
+    "kind": "clear",
+    "truth": "Normal shopping",
+    "tier": "clear",
+    "flagged": "Self checkout skip scan",
+    "risk": 0.0,
+    "headline": "No alert: behaviour on the self checkout camera is consistent with normal shopping.",
+    "narrator": "template"
+  },
+  {
+    "slug": "11_missed_concealment",
+    "subtype": "concealment_bag",
+    "kind": "miss",
+    "truth": "Concealment in a bag",
+    "tier": "clear",
+    "flagged": "Concealment in a bag",
+    "risk": 0.143,
+    "headline": "No alert: behaviour on the aisle camera is consistent with normal shopping.",
+    "narrator": "template"
+  },
+  {
+    "slug": "12_false_alert_collection",
+    "subtype": "exit_collection",
+    "kind": "false_alert",
+    "truth": "Normal shopping",
+    "tier": "review",
+    "flagged": "Trolley push out",
+    "risk": 0.808,
+    "headline": "Review alert: possible trolley push out on the store exit camera.",
+    "narrator": "template"
+  }
+]
